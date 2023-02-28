@@ -42,7 +42,9 @@ const allApiSet = (data, dataLimit) =>{
             <div class="card-body">
                 <h5 class="card-title">${data.phone_name}</h5>
                 <h4> ${data.brand} </h4>
-                <button class="btn btn-info"> details</button>
+                <button onclick = "getPhoneSlug('${data.slug}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mobileDetails"> details</button>
+
+                
             </div>
             </div>
         
@@ -97,6 +99,52 @@ const isLoaderElement = (loding) => {
     }
 
     
+}
+
+///btn slug function
+
+const  getPhoneSlug = async (id) =>{
+    console.log(id)
+
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    // const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
+    // const res = await fetch(url);
+    // const data = await res.json();
+    // displayPhones(data.data, dataLimit);
+    console.log(url)
+    const res = await fetch(url);
+    const data = await res.json();
+   
+
+    showDataSlugModel(data.data)
+}
+
+const showDataSlugModel = (data) =>{
+
+     const modelContainer = document.getElementById('model-iphone');
+     modelContainer.innerHTML = `
+     <div class="modal fade" id="mobileDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mobileDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="mobileDetailsLabel">Brande Name : ${data.brand}</h1> <br>
+                <h3>storeage : ${data.brand}</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
+            </div>
+            </div>
+        </div>
+    </div>
+     
+     
+     `;
+    console.log(data)
 }
 
 loadApi('iphone', 10)
